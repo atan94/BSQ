@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jculleto <jculleto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:12:48 by amtan             #+#    #+#             */
-/*   Updated: 2025/08/12 21:46:13 by jculleto         ###   ########.fr       */
+/*   Updated: 2025/08/12 23:42:13 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
-
 
 void	process_stdin(void)
 {
@@ -28,14 +27,12 @@ void	process_stdin(void)
 		write(1, "map error\n", 10);
 	}
 	return (0);
-
 }
 
 void	process_file(char *filename)
 {
 	t_map	map;
 	int		fd;
-
 
 	fd = open(argv[i], O_RDONLY);
 	if (fd < 0)
@@ -59,13 +56,11 @@ int	main(int argc, char **argv)
 	int	i;
 
 	i = 1;
-
 	if (argc < 2)
 	{
-		process_stdin()
-		retrun(0)
+		process_stdin() retrun(0)
 	}
-		while (i < argc)
+	while (i < argc)
 	{
 		process_file(argv[i]);
 		if (i < argc - 1)
