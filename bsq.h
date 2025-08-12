@@ -6,7 +6,7 @@
 /*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:24:46 by amtan             #+#    #+#             */
-/*   Updated: 2025/08/12 16:52:03 by amtan            ###   ########.fr       */
+/*   Updated: 2025/08/12 18:50:18 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BSQ_H
 
 # include <fcntl.h>
+# include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
 
