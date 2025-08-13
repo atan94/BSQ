@@ -6,7 +6,7 @@
 /*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:24:46 by amtan             #+#    #+#             */
-/*   Updated: 2025/08/12 18:50:18 by amtan            ###   ########.fr       */
+/*   Updated: 2025/08/13 13:58:02 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@ typedef struct s_map
 	char	fill;
 	char	**grid;
 }			t_map;
+
+typedef struct s_reader
+{
+	char	buf[BUF_SIZE];
+	int		sz;
+	int		idx;
+}			t_reader;
+
+typedef struct s_line
+{
+	char	*p;
+	int		cap;
+	int		len;
+}			t_line;
 
 int			parse_map(int fd, t_map *map);
 void		solve_map(t_map *map);
