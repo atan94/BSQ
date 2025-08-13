@@ -6,11 +6,11 @@
 /*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:44:00 by amtan             #+#    #+#             */
-/*   Updated: 2025/08/13 16:18:18 by amtan            ###   ########.fr       */
+/*   Updated: 2025/08/13 16:34:52 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "solver_int.h"
+#include "bsq.h"
 
 void	fill_square(t_map *map, int size, int row, int col)
 {

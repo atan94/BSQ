@@ -6,13 +6,13 @@
 /*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 14:47:31 by amtan             #+#    #+#             */
-/*   Updated: 2025/08/13 16:18:07 by amtan            ###   ########.fr       */
+/*   Updated: 2025/08/13 16:32:27 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
-#include <fcntl.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 int	pm_read_header(int fd, t_map *map)
 {

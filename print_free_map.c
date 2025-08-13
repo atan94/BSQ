@@ -6,12 +6,13 @@
 /*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 14:51:27 by jculleto          #+#    #+#             */
-/*   Updated: 2025/08/13 16:19:33 by amtan            ###   ########.fr       */
+/*   Updated: 2025/08/13 16:32:51 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 void	print_map(t_map *map)
 {
