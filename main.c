@@ -6,7 +6,7 @@
 /*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:12:48 by amtan             #+#    #+#             */
-/*   Updated: 2025/08/13 16:18:13 by amtan            ###   ########.fr       */
+/*   Updated: 2025/08/13 17:19:37 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,32 @@ void	process_stdin(void)
 	{
 		write(1, "map error\n", 10);
 	}
-	return (0);
+	return ;
 }
 
 void	process_file(char *filename)
 {
 	t_map	map;
 	int		fd;
+	int		result;
 
-	fd = open(argv[i], O_RDONLY);
+	result = -1;
+	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		write(1, "map error\n", 10);
-	else
-		result = parse_map(fd, &map);
-	close(fd);
-	if (result == 0)
 	{
-		solve_map(&map);
-		print_map(&map);
-		free_map(&map);
-	}
-	else
 		write(1, "map error\n", 10);
+		return ;
+	}
+	result = parse_map(fd, &map);
 	close(fd);
+	if (result != 0)
+	{
+		write(1, "map error\n", 10);
+		return ;
+	}
+	solve_map(&map);
+	print_map(&map);
+	free_map(&map);
 }
 
 int	main(int argc, char **argv)
@@ -61,7 +64,7 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 	{
 		process_stdin();
-		retrun(0);
+		return (0);
 	}
 	while (i < argc)
 	{

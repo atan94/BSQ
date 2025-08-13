@@ -6,14 +6,14 @@
 /*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 17:20:28 by amtan             #+#    #+#             */
-/*   Updated: 2025/08/13 16:18:10 by amtan            ###   ########.fr       */
+/*   Updated: 2025/08/13 17:19:44 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 #include <limits.h>
 
-int	parse_characters(char *header, t_map *map)
+int	parse_characters(char *header, t_map *map, int len)
 {
 	map->fill = header[len - 1];
 	map->obstacle = header[len - 2];
@@ -51,6 +51,7 @@ int	parse_header_line(char *header, t_map *map)
 {
 	int		len;
 	long	total_lines;
+	int		numlen;
 
 	len = 0;
 	while (header[len])
@@ -61,9 +62,12 @@ int	parse_header_line(char *header, t_map *map)
 	}
 	if (len < 4)
 		return (-1);
-	if (parse_characters(header, map) == -1)
+	if (parse_characters(header, map, len) == -1)
 		return (-1);
-	total_lines = parse_total_lines(header, len);
+	numlen = len - 3;
+	if (numlen <= 0)
+		return (-1);
+	total_lines = parse_total_lines(header, numlen);
 	if (total_lines < 1)
 		return (-1);
 	map->rows = (int)total_lines;
