@@ -6,11 +6,13 @@
 /*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:12:48 by amtan             #+#    #+#             */
-/*   Updated: 2025/08/13 14:55:16 by amtan            ###   ########.fr       */
+/*   Updated: 2025/08/13 16:18:13 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 void	process_stdin(void)
 {
@@ -58,7 +60,8 @@ int	main(int argc, char **argv)
 	i = 1;
 	if (argc < 2)
 	{
-		process_stdin() retrun(0);
+		process_stdin();
+		retrun(0);
 	}
 	while (i < argc)
 	{

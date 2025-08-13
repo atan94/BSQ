@@ -6,11 +6,14 @@
 /*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:07:23 by amtan             #+#    #+#             */
-/*   Updated: 2025/08/13 13:57:55 by amtan            ###   ########.fr       */
+/*   Updated: 2025/08/13 16:18:04 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
+#include "reader_int.h"
+#include <fcntl.h>
+#include <stdlib.h>
 
 int	grow_line(char **p, int *cap, int need, int len)
 {
