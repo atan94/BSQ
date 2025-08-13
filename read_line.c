@@ -6,107 +6,106 @@
 /*   By: amtan <amtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 19:07:23 by amtan             #+#    #+#             */
-/*   Updated: 2025/08/12 23:40:19 by amtan            ###   ########.fr       */
+/*   Updated: 2025/08/13 13:57:55 by amtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 
-int	grow_line(char **line, int *cap, int need, int len)
+int	grow_line(char **p, int *cap, int need, int len)
 {
 	char	*n;
 	int		i;
-	int		newcap;
+	int		nc;
 
-	newcap = *cap;
-	while (need > newcap)
-		newcap *= 2;
-	n = (char *)malloc(newcap);
+	nc = *cap;
+	while (need > nc)
+		nc = nc * 2;
+	n = (char *)malloc(nc);
 	if (!n)
 		return (-1);
 	i = 0;
 	while (i < len)
 	{
-		n[i] = (*line)[i];
-		i++;
+		n[i] = (*p)[i];
+		i = i + 1;
 	}
-	free(*line);
-	*line = n;
-	*cap = newcap;
+	free(*p);
+	*p = n;
+	*cap = nc;
 	return (0);
 }
 
-int	rl_try_refill(int fd, char *buf, int *sz, int *idx)
+int	append_char(t_line *l, char c)
 {
-	if (*idx < *sz)
-		return (1);
-	*sz = read(fd, buf, BUF_SIZE);
-	if (*sz <= 0)
+	if (l->len + 2 > l->cap)
 	{
-		*sz = 0;
-		*idx = 0;
+		if (grow_line(&(l->p), &(l->cap), l->len + 2, l->len) < 0)
+			return (-1);
+	}
+	l->p[l->len] = c;
+	l->len = l->len + 1;
+	return (0);
+}
+
+int	try_refill(int fd, t_reader *r)
+{
+	if (r->idx < r->sz)
+		return (1);
+	r->sz = read(fd, r->buf, BUF_SIZE);
+	if (r->sz <= 0)
+	{
+		r->sz = 0;
+		r->idx = 0;
 		return (0);
 	}
-	*idx = 0;
+	r->idx = 0;
 	return (1);
 }
 
-int	rl_append_or_fail(char **line, int *cap, int *len, char c)
-{
-	if (*len + 2 > *cap)
-	{
-		if (grow_line(line, cap, *len + 2, *len) < 0)
-			return (-1);
-	}
-	(*line)[(*len)++] = c;
-	return (0);
-}
-
-int	fill_line(int fd, char *buf, int *sz, int *idx, char **pline, int *cap,
-		int *len)
+int	fill_line(int fd, t_reader *r, t_line *l)
 {
 	while (1)
 	{
-		if (!rl_try_refill(fd, buf, sz, idx))
+		if (!try_refill(fd, r))
 			return (0);
-		if (buf[*idx] == '\n')
+		if (r->buf[r->idx] == '\n')
 		{
-			(*idx)++;
+			r->idx = r->idx + 1;
 			return (1);
 		}
-		if (rl_append_or_fail(pline, cap, len, buf[*idx]) < 0)
+		if (append_char(l, r->buf[r->idx]) < 0)
 		{
-			free(*pline);
-			*pline = NULL;
+			free(l->p);
+			l->p = NULL;
 			return (0);
 		}
-		(*idx)++;
+		r->idx = r->idx + 1;
 	}
 }
 
 char	*read_line(int fd, int *len)
 {
-	static char	buf[BUF_SIZE];
-	static int	sz;
-	static int	idx;
-	char		*line;
-	int			cap;
+	static t_reader	r;
+	t_line			l;
 
 	*len = 0;
-	cap = 128;
-	line = (char *)malloc(cap);
-	if (!line)
+	l.cap = 128;
+	l.len = 0;
+	l.p = (char *)malloc(l.cap);
+	if (!l.p)
 		return (NULL);
-	if (!fill_line(fd, buf, &sz, &idx, &line, &cap, len))
+	if (!fill_line(fd, &r, &l))
 	{
-		if (!line)
+		if (!l.p)
 			return (NULL);
-		if (sz == 0 && *len == 0)
+		if (r.sz == 0 && l.len == 0)
 		{
-			free(line);
+			free(l.p);
 			return (NULL);
 		}
 	}
-	line[*len] = '\0';
-	return (line);
+	l.p[l.len] = '\0';
+	*len = l.len;
+	return (l.p);
 }
